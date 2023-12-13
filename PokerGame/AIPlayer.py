@@ -1,21 +1,32 @@
-import Player
-import Cards
+from Player import Player
+from Card import Card
 import random
-import OtherPlayerHands
-class AIPlayer(Player.Player):
+from Hand import Hand
+from ExchangePlayer import ExchangePlayer
+
+class AIPlayer(Player):
+    def __init__(self,name:str,point:int,exchange:bool,hand:Hand,exchangePlayer:ExchangePlayer)->None:
+        self.name = name
+        self.point = point
+        self.exchange = exchange
+        self.hand = hand
+        self.exchangePlayer = exchangePlayer
+
     def NameHimSelf(self,number)->None:
         self.name = f"AI{number}"
         return 
-    def Show(self)->Cards.Cards:
-        return self.hands.pop(random.randint(0,len(self.hands)-1))
-    def ExchangeHands(self,players:list[Player.Player])->None:
-        if(random.randint(1,3)==1):
-            moveMyselfList = players[:]
-            moveMyselfList.remove(self)
-            pickNum = random.randint(0,len(moveMyselfList)-1)
-            player = moveMyselfList[pickNum] 
-            self.otherPlayerHands = OtherPlayerHands.OtherPlayerHands(3,player) 
-            player.hands,self.hands = self.hands,player.hands
-            self.exchange = False
-            print(f"{self.name}選擇使用了換牌，換牌對象為{self.otherPlayerHands.otherPlayer.name}\n")
-        return
+    
+    def Show(self)->Card:
+        self.hand.count-=1
+        return self.hand.cards.pop(random.randint(0,self.hand.count))
+
+    def ExchangeDecide(self) -> bool:
+        return random.randint(1,3)==1
+
+    def ExchangeChoose(self,players:list[Player])->Player:     
+        moveMyselfList = players[:]
+        moveMyselfList.remove(self)
+        pickNum = random.randint(0,len(moveMyselfList)-1)
+        return moveMyselfList[pickNum] 
+        
+        

@@ -1,31 +1,47 @@
+from __future__ import annotations
 import abc
-import Cards
+from Card import Card
+from Hand import Hand
+from typing import List
+from ExchangePlayer import ExchangePlayer
+
+
+
 class Player(abc.ABC):
-    def __init__(self)->None:
-        self.name=""
-        self.hand=0
-        self.point=0
-        self.nextPlayer = None
-        self.exchange=True
-        self.hands = []
-        self.otherPlayerHands = None
+
+    def __init__(self,name:str,point:int,exchange:bool,hand:Hand,exchangePlayer:ExchangePlayer)->None:
+        self.name = name
+        self.point = point
+        self.exchange = exchange
+        self.hand = hand
+        self.exchangePlayer = exchangePlayer
+
     @abc.abstractmethod
     def NameHimSelf(self)->None:
         return 
 
-    def TakesTurn(self,player:"Player")->"Player":
-        self.nextPlayer = player
-        return player
+    def ExchangeHands(self,players:List[Player])->bool:
+        if(self.ExchangeDecide()):
+            player = self.ExchangeChoose(players)
+            self.exchangePlayer = ExchangePlayer(3,player)
+            player.hand,self.hand = self.hand,player.hand
+            self.exchange = False
+            print(f"{self.name}選擇使用了換牌，換牌對象為{self.exchangePlayer.player.name}\n")
+
+    @abc.abstractmethod
+    def ExchangeDecide(self)->bool:
+        return
     
     @abc.abstractmethod
-    def ExchangeHands(self,player:"Player")->bool:
-        return 
-
-    def ReturnHands(self)->None:
-        print(f"時間到了，{self.name}的牌要還給{self.otherPlayerHands.otherPlayer.name}")
-        self.hands,self.otherPlayerHands.otherPlayer.hands =self.otherPlayerHands.otherPlayer.hands,self.hands
-        return 
-
-    @abc.abstractmethod
-    def Show(self)->Cards.Cards:
+    def ExchangeChoose(self,players:list[Player])->None:
         return
+    
+    def ReturnHands(self)->None:
+        print(f"時間到了，{self.name}的牌要還給{self.exchangePlayer}")
+        self.hand,self.exchangePlayer.player.hand = self.exchangePlayer.player.hand,self.hand
+        return 
+    
+    @abc.abstractmethod
+    def Show(self)->Card:
+        return
+    

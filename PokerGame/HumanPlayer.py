@@ -1,31 +1,43 @@
-import Player
-import Cards
-import OtherPlayerHands
+from Player import Player
+from Card import Card
+from Hand import Hand
+from Suits import Suits #是否可以
+from Ranks import Ranks #是否可以
+from ExchangePlayer import ExchangePlayer
 
-class HumanPlayer(Player.Player):
+class HumanPlayer(Player):
+    def __init__(self,name:str,point:int,exchange:bool,hand:Hand,exchangePlayer:ExchangePlayer)->None:
+        self.name = name
+        self.point = point
+        self.exchange = exchange
+        self.hand = hand
+        self.exchangePlayer = exchangePlayer
+
     def NameHimSelf(self)->None:
         self.name = input("使用者取名: ")
 
-    def Show(self)->Cards.Cards:
+    def Show(self)->Card:
         count = 1
         print("目前持有的卡牌:\n")
-        for hand in self.hands:
-            print(f"{count}. {hand.suit} {hand.rank}\n")
+        for card in self.hand.cards:
+            print(f"{count}. {Suits(card.suit).name} {Ranks(card.rank).name}\n")
             count+=1
         try:
             pickNum = int(input("請選擇要出哪張牌\n"))
         except:
             print("請輸入數字\n")
             return self.Show()
-        if (pickNum<1 or pickNum>len(self.hands)):
+        if (pickNum<1 or pickNum>self.hand.count):
             print("請輸入顯示的數字\n")
             return self.Show()
-        return self.hands.pop(pickNum-1)
+        self.hand.count-=1
+        return self.hand.cards.pop(pickNum-1)
     
-    def ExchangeHands(self,players:list[Player.Player])->None:
+    def ExchangeDecide(self)->bool:
         agreeExchange= input("是否要交換別人的牌,要的話請輸入Y 或是 y\n")
-        if (agreeExchange!="Y" and agreeExchange!="y"):
-            return
+        return agreeExchange=="Y" or agreeExchange=="y"
+    
+    def ExchangeChoose(self,players:list[Player])->Player:
         print("玩家對應編號\n")
         for index in range(len(players)):
             if index==0:
@@ -40,9 +52,4 @@ class HumanPlayer(Player.Player):
         if (pickNum<1 or pickNum>len(players)):
             print("請輸入顯示的數字\n")
             return self.ExchangeHands()  
-        player = players[pickNum] 
-        self.otherPlayerHands = OtherPlayerHands.OtherPlayerHands(3,player)
-        player.hands,self.hands = self.hands,player.hands
-        self.exchange = False
-        print(f"{self.name}選擇使用了換牌，換牌對象為{self.otherPlayerHands.otherPlayer.name}\n")
-        return 
+        return players[pickNum]
