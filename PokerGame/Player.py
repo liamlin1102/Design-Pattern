@@ -9,16 +9,21 @@ from ExchangePlayer import ExchangePlayer
 
 class Player(abc.ABC):
 
-    def __init__(self,name:str,point:int,exchange:bool,hand:Hand,exchangePlayer:ExchangePlayer)->None:
+    def __init__(self,name:str,point:int,exchange:bool,hand:Hand,exchangePlayer:ExchangePlayer,nextPlayer:Player)->None:
         self.name = name
         self.point = point
         self.exchange = exchange
         self.hand = hand
         self.exchangePlayer = exchangePlayer
+        self.nextPlayer = nextPlayer
+    
 
     @abc.abstractmethod
     def NameHimSelf(self)->None:
         return 
+
+    def TakeTurn(self)->Player:
+        return self.nextPlayer
 
     def ExchangeHands(self,players:List[Player])->bool:
         if(self.ExchangeDecide()):

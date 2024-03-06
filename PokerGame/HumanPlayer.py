@@ -6,12 +6,13 @@ from Ranks import Ranks #是否可以
 from ExchangePlayer import ExchangePlayer
 
 class HumanPlayer(Player):
-    def __init__(self,name:str,point:int,exchange:bool,hand:Hand,exchangePlayer:ExchangePlayer)->None:
+    def __init__(self,name:str,point:int,exchange:bool,hand:Hand,exchangePlayer:ExchangePlayer,nextPlayer:Player)->None:
         self.name = name
         self.point = point
         self.exchange = exchange
         self.hand = hand
         self.exchangePlayer = exchangePlayer
+        self.nextPlayer = nextPlayer
 
     def NameHimSelf(self)->None:
         self.name = input("使用者取名: ")

@@ -1,4 +1,4 @@
-from ShowDown import ShowDown
+from CardGame.CardGame import ShowDown
 from AIPlayer import AIPlayer
 from HumanPlayer import HumanPlayer
 from Deck import Deck 

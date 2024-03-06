@@ -1,27 +1,20 @@
 from Imdividual import Imdividual
 from Strategy import Strategy
+from typing import List
 import sys,math
+
 class Distance(Strategy) :
-    def MatchStrategy(self,user:Imdividual,imdividuals:list[Imdividual])->Imdividual:
-        minDistance = sys.maxsize
-        matchUser = None
+    def MatchStrategy(self,user:Imdividual,imdividuals:List[Imdividual])->List[List[Imdividual]]:
+        matchUserList = []
+        dictUser = {}
+        strategySet = set()
         for otherUser in imdividuals:
-            otherUserDistance = math.sqrt(abs(otherUser.coord[0]-user.coord[0])+abs(otherUser.coord[1]-user.coord[1]))
-            if(otherUserDistance<minDistance):
-                matchUser = otherUser
-                minDistance = otherUserDistance
-            if(otherUserDistance==minDistance and otherUser.id<matchUser.id):
-                matchUser = otherUser                
-        return matchUser
-        
-    def MatchRerveseStrategy(self,user:Imdividual,imdividuals:[Imdividual])->Imdividual:
-        maxDistance = 0
-        matchUser = None
-        for otherUser in imdividuals:
-            otherUserDistance = math.sqrt(abs(otherUser.coord[0]-user.coord[0])+abs(otherUser.coord[1]-user.coord[1]))
-            if(otherUserDistance>minDistance):
-                matchUser = otherUser
-                minDistance = otherUserDistance
-            if(otherUserDistance==minDistance and otherUser.id<matchUser.id):
-                matchUser = otherUser   
-        return matchUser
+            otherUserDistance = math.sqrt(abs(otherUser.coord.x-user.coord.x)+abs(otherUser.coord.y-user.coord.y))
+            if otherUserDistance not in dictUser:
+                dictUser[otherUserDistance] = []
+                strategySet.add(otherUserDistance)
+            dictUser[otherUserDistance].append(otherUser)        
+        sorted(strategySet)  
+        for distance in strategySet:
+            matchUserList.append(dictUser[distance])
+        return matchUserList     
