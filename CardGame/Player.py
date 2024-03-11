@@ -15,10 +15,9 @@ class Player(abc.ABC):
         self.name = input("請在下方輸入該玩家的名字")
         return 
 
-    def TakeTurn(self,showCardList)->Player:
-        if(self.showCardCondition()):
-            showCardList.append(self.Show())
-        return self.nextPlayer
+    @abc.abstractmethod
+    def showCardCondition(self)->bool:
+        return 
     
     @abc.abstractmethod
     def showCardCondition(self)->bool:

@@ -17,7 +17,7 @@ class HumanPlayer(Player):
             return self.Show(cards)
         if (pickNum<1 or pickNum>len(self.cards)):
             print("請輸入顯示的數字\n")
-            return self.Show()
+            return self.Show(cards)
         self.hand.count-=1
         return self.hand.cards.pop(cards[pickNum-1][0])
     

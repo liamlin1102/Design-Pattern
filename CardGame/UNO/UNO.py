@@ -4,11 +4,11 @@ from ..Deck import Deck
 from Card import Card 
 from ..CardGame import CardGame
 class UNO(CardGame):  
-    def DrawCardTime(self,player:Player)->None:
-        while(len(self.deck.cards)!=0):
-            self.deck.DrawCard(player)
-            player = player.TakeTurn()
-
+    def DrawCardTime(self,players:List[Player])->None:
+        for round in range(0,4):
+            for player in players:
+                self.deck.DrawCard(player)
+                
     def GameProcess(self,player:Player)->None:
         cardList=[]
         winner = None
