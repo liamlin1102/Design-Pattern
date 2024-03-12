@@ -6,16 +6,7 @@ from Ranks import Ranks
 from Card import Card 
 from ..CardGame import CardGame
 
-class ShowDown(CardGame):
-
-    def SetingGame(self)->None:
-        count=0
-        for player in self.players:
-            player.NameHimSelf()
-            self.players[count-1].nextPlayer = player
-            count+=1
-        self.deck.Shuffle()
-        
+class ShowDown(CardGame):        
     def DrawCardTime(self)->None:
         player = self.players[0]
         while(len(self.deck.cards)!=0):

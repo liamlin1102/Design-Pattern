@@ -12,11 +12,15 @@ class Player(IPlayer):
         super().__init__(name, hand, nextPlayer)
         self.canShowCards = canShowCards
 
-    def TakeTurn(self,platForm)->Player:
+    def TakeTurn(self,deck,platForm)->Player:
         cards = []
         if(self.showCardCondition(platForm,cards)):
             self.show(cards)
-        return  self.nextPlayer
+        else:
+            if(len(deck.cards)==0):
+                platForm.PutCardToDeck(deck)
+            deck.DrawCard(self)    
+        return  self.nextPlayer,len(self.hand.cards)==0
 
     def showCardCondition(self,platForm,cards)->bool:
         lastCard = platForm[-1]

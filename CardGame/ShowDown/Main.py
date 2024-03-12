@@ -1,4 +1,4 @@
-from CardGame.CardGame import ShowDown
+from ShowDown import ShowDown
 from AIPlayer import AIPlayer
 from HumanPlayer import HumanPlayer
 from Card import Card
@@ -16,4 +16,4 @@ class Main:
         showDown.GameStart()
 
 main = Main()
-main.main()
+main.main()z

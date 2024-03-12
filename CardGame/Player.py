@@ -10,14 +10,14 @@ class Player(abc.ABC):
         self.name = name
         self.hand = hand
         self.nextPlayer = nextPlayer
-    
+
     def NameHimSelf(self)->None:
         self.name = input("請在下方輸入該玩家的名字")
-        return 
-
+        return
+ 
     @abc.abstractmethod
-    def showCardCondition(self)->bool:
-        return 
+    def TakeTurn(self)->Player:
+        return
     
     @abc.abstractmethod
     def showCardCondition(self)->bool:

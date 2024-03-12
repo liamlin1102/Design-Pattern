@@ -13,9 +13,13 @@ class CardGame(ABC):
         self.DrawCardTime(self.players[0])
         self.GameProcess()
 
-    @abstractmethod
     def SetingGame(self)->None:
-        return
+        count=0
+        for player in self.players:
+            player.NameHimSelf()
+            self.players[count-1].nextPlayer = player
+            count+=1
+        self.deck.Shuffle()
     
     @abstractmethod
     def DrawCardTime(self,player:Player)->None:

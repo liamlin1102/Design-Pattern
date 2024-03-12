@@ -8,6 +8,11 @@ from typing import List
 
 class Player(IPlayer):
     
+    def TakeTurn(self,showCardList)->Player:
+        if(self.showCardCondition()):
+            showCardList.append(self.Show())
+        return self.nextPlayer
+
     def showCardCondition(self)->bool:
         return len(self.hand)==0
     
