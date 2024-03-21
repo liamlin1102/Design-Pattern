@@ -15,17 +15,22 @@ class World:
         for position in lifePosition:
             pick = random.randint(0,3)
             if pick==0:
-                answer[position] = Hero("H")
+                answer[position] = Hero("H",position)
             elif pick==1:
-                answer[position] = Water("W")
+                answer[position] = Water("W",position)
             elif pick==2:
-                answer[position] = Fire("F")
+                answer[position] = Fire("F",position)
         return answer
     
     def moveSprite(self,startPosition:int,endPosition:int):
         startSprite = self.sprites[startPosition]
-        if(startSprite==None):
-            return False
-        if(startSprite.collision(self.sprites[endPosition])):
-            self.sprites[endPosition] = startSprite
-        return True
+        remove = False
+        if not startSprite:
+            print("起始位置無目標")
+        elif not endPosition or startSprite.collision(self.sprites[endPosition],remove):
+              self.sprites[endPosition],self.sprites[startPosition] = startSprite,None  
+              if(remove): self.removeSprite(startSprite)
+        return 
+    
+    def removeSprite(self,position:int):
+        self.sprites[position]=None
