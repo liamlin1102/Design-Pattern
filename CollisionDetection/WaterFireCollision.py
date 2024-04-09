@@ -4,8 +4,11 @@ from CollisionHandler import CollisionHandler
 from __future__ import annotations
 
 class WaterFireCollision(CollisionHandler):
+    
     def matchType(self,startType:str,endType:str):
-        return
+        return (startType=="W" and endType=="F") or (startType=="F" and endType=="W") 
     
     def collisionEffect(self,startSprite:Sprite,endSprite:Sprite):
-        return 
+        self.world.removeSprite(startSprite.positon)
+        self.world.removeSprite(endSprite.positon)
+        return False

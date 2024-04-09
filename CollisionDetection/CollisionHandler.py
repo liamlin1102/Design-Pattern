@@ -1,10 +1,12 @@
 from abc import ABC,abstractmethod
 from Sprite import Sprite
+from World import World
 from __future__ import annotations
 class CollisionHandler(ABC):
     
-    def __init__(self,next:CollisionHandler):
+    def __init__(self,next:CollisionHandler,world:World):
         self.next = next
+        self.world = world
     
     def collision(self,startSprite:Sprite,endSprite:Sprite):
         if self.matchType(startSprite.type,endSprite.type):
