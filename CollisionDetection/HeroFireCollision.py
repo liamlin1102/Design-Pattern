@@ -9,7 +9,10 @@ class HeroFireCollision(CollisionHandler):
         return (startType=="H" and endType=="F") or (startType=="F" and endType=="H") 
     
     def collisionEffect(self,startSprite:Sprite,endSprite:Sprite):
-        self.hp-=10
-        self.world.removeSprite(target)
-        if self.hp==0 : remove=True
-        return True
+        waving = True
+        if(startSprite.type!="H"): 
+            startSprite,endSprite = endSprite,startSprite
+            waving = False
+        startSprite.hp+=10
+        self.world.removeSprite(endSprite)
+        return waving

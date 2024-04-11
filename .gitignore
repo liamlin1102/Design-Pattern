@@ -2,3 +2,7 @@
 **/.asta
 **/.jpg
 **/.zip
+*.asta
+*.pyc
+*.zip
+*.jpg

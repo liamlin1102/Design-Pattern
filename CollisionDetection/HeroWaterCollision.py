@@ -8,4 +8,13 @@ class HeroWaterCollision(CollisionHandler):
         return (startType=="H" and endType=="W") or (startType=="W" and endType=="H") 
     
     def collisionEffect(self,startSprite:Sprite,endSprite:Sprite):
-        return True
+        waving = True
+        if(startSprite.type!="H"): 
+            startSprite,endSprite = endSprite,startSprite
+            waving = False
+        startSprite.hp-=10
+        self.world.removeSprite(endSprite)
+        if self.hp==0 : 
+            self.world.removeSprite(startSprite) 
+            waving = False
+        return waving
