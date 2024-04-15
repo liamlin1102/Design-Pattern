@@ -7,8 +7,5 @@ class Sprite(ABC):
         self.type = type
         self.positon = position
         self.world = world
-        return 
-    @abstractmethod
-    def collision(self,target: Sprite,remove:bool):
-        return 
+        return
         

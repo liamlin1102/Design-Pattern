@@ -1,15 +1,7 @@
 from Sprite import Sprite
+from World import World
 class Water(Sprite):
-
-    def collision(self,target: Sprite,remove:bool):
-        if target.type=="W":
-            return False
-        elif target.type=="H" :
-            remove = True
-            target.hp +=10
-            return False
-        elif target.type=="F":
-            self.world.removeSprite(target)
-            return False
-        return True
+    def __init__(self, type: str, position: int, world: World):
+        super().__init__(type, position, world)
+        return 
         
