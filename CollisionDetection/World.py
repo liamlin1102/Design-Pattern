@@ -1,6 +1,7 @@
 from Hero import Hero
 from Fire import Fire
 from Water import Water
+from CollisionHandler import CollisionHandler
 import random 
 
 class World:
@@ -22,12 +23,12 @@ class World:
                 answer[position] = Fire("F",position)
         return answer
     
-    def moveSprite(self,startPosition:int,endPosition:int):
+    def moveSprite(self,startPosition:int,endPosition:int,handler:CollisionHandler):
         startSprite = self.sprites[startPosition]
         remove = False
         if not startSprite:
             print("起始位置無目標")
-        elif not endPosition or startSprite.collision(self.sprites[endPosition],remove):
+        elif not endPosition or handler.collision:
               self.sprites[endPosition],self.sprites[startPosition] = startSprite,None  
               if(remove): self.removeSprite(startSprite)
         return 
